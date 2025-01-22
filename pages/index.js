@@ -44,7 +44,7 @@ export default function WeatherPage() {
             padding: "10px 15px",
             fontSize: "16px",
             borderRadius: "5px",
-            backgroundColor: "#007bff",
+            backgroundColor: "black",
             color: "#fff",
             border: "none",
             cursor: "pointer",
