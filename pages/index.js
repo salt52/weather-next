@@ -1,78 +1,79 @@
-import { useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default function WeatherPage() {
-  const [city, setCity] = useState("");
-  const [weather, setWeather] = useState(null);
-  const [error, setError] = useState(null);
+import Link from "next/link";
 
-  const fetchWeather = async () => {
-    const apiKey = "a8c2766725aaad25d93d94f5997ebf49";
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+export default function HomePage() {
+  const [weatherData, setWeatherData] = useState([]);
 
-    try {
-      const response = await axios.get(apiUrl);
-      setWeather(response.data);
-      setError(null);
-    } catch (err) {
-      setError("City not found or API error");
-      setWeather(null);
-    }
-  };
+  const cities = ["Nha Trang", "London", "Rome"];
+
+  useEffect(() => {
+    const fetchWeatherdata = async () => {
+      const apiKey = "a8c2766725aaad25d93d94f5997ebf49";
+      const promises = cities.map((city) =>
+        axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+        )
+      );
+
+      try {
+        const results = await Promise.all(promises);
+        setWeatherData(results.map((res) => res.data));
+      } catch (err) {
+        console.error("Error fetching weather data:", err);
+      }
+    };
+    fetchWeatherdata();
+  }, []);
 
   return (
     <div style={{ textAlign: "center", padding: "20px" }}>
-      <h1>Погода от Дааани</h1>
-      <div style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          placeholder="Enter city name"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          style={{
-            padding: "10px",
-            marginRight: "5px",
-            fontsize: "16px",
-            borderRadius: "5px",
-            border: " 1px solid #ccc",
-          }}
-        />
+      <h1>Погода</h1>
+      <Link
+        href="/weather"
+        style={{
+          marginTop: "20px",
+          display: "inline-block",
+          padding: "10px 15px",
+          backgroundColor: "black",
+          color: "white",
+          borderRadius: "5px",
+          textDecoration: "none",
+        }}
+      >
+        Узнать погоду
+      </Link>
 
-        <button
-          onClick={fetchWeather}
-          style={{
-            padding: "10px 15px",
-            fontSize: "16px",
-            borderRadius: "5px",
-            backgroundColor: "black",
-            color: "#fff",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Ищи
-        </button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        {weatherData.map((weather) => (
+          <div
+            key={`weather-${weather.id}`}
+            style={{
+              marginTop: "20px",
+              padding: "20px",
+              border: "1px solid #ccc",
+              borderRadius: "10px",
+              width: "300px",
+              textAlign: "left",
+              backgroundColor: "blue",
+            }}
+          >
+            <h3>{weather.name}</h3>
+            <p>Temperature: {weather.main.temp}°C</p>
+            <p>Weather: {weather.weather[0].description}</p>
+            <p>Humidity: {weather.main.humidity}%</p>
+            <p>Wind Speed: {weather.wind.speed} m/s</p>
+          </div>
+        ))}
       </div>
-      {error && <p style={{ color: "red", maginTop: "20px" }}>{error}</p>}
-
-      {weather && (
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "20px",
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            display: "inline-block",
-            textAlign: "left",
-          }}
-        >
-          <h3>{weather.name}</h3>
-          <p>Temperature: {weather.main.temp}°C</p>
-          <p>Weather: {weather.weather[0].description}</p>
-          <p>Humidity: {weather.main.humidity}%</p>
-          <p>Wind Speed: {weather.wind.speed} m/s</p>
-        </div>
-      )}
     </div>
   );
 }
