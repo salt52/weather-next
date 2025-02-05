@@ -1,42 +1,157 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
+  font-family: Arial, sans-serif;
   margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-a {
-  color: inherit;
+/* Container */
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.weather-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+/* Блок карточек */
+.weather-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Карточка погоды */
+
+.weather-card {
+  background-color: blue;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  color: white;
+}
+
+/* Ввод и кнопка*/
+.search-box {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.search-input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 200px;
+}
+
+.search-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Текст ошибки */
+.error-text {
+  color: red;
+  margin-top: 20px;
+}
+
+/* Layout */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #007bff;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 10px;
+  background-color: #f1f1f1;
+}
+
+/* city.js */
+/* Контейнер ошибки */
+.error-container {
+  text-align: center;
+  padding: 50px;
+  color: red;
+}
+
+/* Контейнер загрузки */
+
+.loading-container {
+  text-align: center;
+  padding: 50px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 404 */
+
+.not-found {
+  text-align: center;
+  padding: 50px;
+}
+
+.not-found h1 {
+  font-size: 32px;
+  color: red;
+  margin-bottom: 10px;
+}
+
+.not-found p {
+  font-size: 18px;
+  margin-bottom: 20px;
 }
